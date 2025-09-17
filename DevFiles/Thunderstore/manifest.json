@@ -1,0 +1,9 @@
+{
+    "name": "LethalEnergistics2",
+    "version_number": "1.0.0",
+    "website_url": "https://github.com/majoranimal/LethalEnergistics2",
+    "description": "A simple mod that provides quick and easy item managment, this includes item storage, quick selling, per item statistics, lifetime storage statistics, and a few other features.",
+    "dependencies": [
+        "BepInEx-BepInExPack-5.4.2100"
+    ]
+}

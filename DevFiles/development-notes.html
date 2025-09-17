@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<style>
+  body {
+    font-size: 18px;
+    color: #FFFFFF;
+    background-color: #000000
+  }
+    
+  comment {
+    color: #FFFFFF;
+  }
+  
+  terminal {
+    color: #41FF00;
+  }
+</style>
+
+<html><body><tt><pre>
+// Keybinds: The keybinds are taken from the users settings (eg. "next page" would be "Walk right")
+
+// Storage Visuals:
+// ---- Item import/export chamber: A circular chamber with glass walls (think test-tube) and a transparent door, there is an 
+//                                  iris-door above the chamber and a hinged circular section as the floor of the chamber
+//
+// ---- Storage compartment: Part of the ships floor becomes transparent and the bottom of the ship is expanded downward, the
+//                           external walls remain opaque with a chute at one side (think Ultrakill doors)
+//
+// ---- Importing: The hinged section falls down (think trapdoor) and the contents of the chamber are dropped into a pitch-black
+//                 area below the chamber, the players hear a machine rumbling before the items are shot out at a random angle
+//                 into the storage compartment through the chute, the items remain in the same position until exported
+//
+// ---- Exporting: The iris door opens and you see a "wind sucking" effect between the chute and chosen items, the delay between
+//                 each item is 1.5 seconds to prevent them from intersecting
+
+// Player interactions:
+// ---- Standing in the chamber during import: Player is dropped into the darkness, they hear a machine-rumbling and get 
+//                                             constant fear, the machine stops and they're sucked into an under-floor
+//                                             storage compartment forced to look up at the other players, the player is
+//                                             a cube (think wall-e scrap cubes) to the other players and upon being exported
+//                                             they remain as a cube, the cube weighs 4 lb and can be thrown like an egg with
+//                                             a larger parabola, when scanned it shows "Bodily damage caused by: Compaction" 
+//
+// ---- Standing in the chamber during export: A chute above the player opens and items are rapidly dropped dealing low damage
+//                                             with each hit, if enough items are dropped the player dies with cause of death
+//                                             being "blunt object trauma"
+
+Main Menu:
+________________________________________________________________________
+<terminal>
+                 Welcome to Lethal Energistics 2 (v2.1)
+------------------------------------------------------------------------
+
+
+
+
+
+          Select a module:
+          - [] Show list of items
+          - [] Show item summaries
+          - [] Show full system summary
+        
+          - [] Sell or Extract ?
+          - [] Store Dropship items (Disabled)
+
+
+
+
+------------------------------------------------------------------------
+Previous Item [W]   |  Next Item [S]   |  Select [Enter]   |  Exit [Esc]
+</terminal>
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+
+List of items:
+________________________________________________________________________
+<terminal>
+Item Name[ ]           Worth[*]          Weight[ ]         Two-Handed[ ]    
+------------------------------------------------------------------------
+[ ] Bell               56▮               20 lb             ( )
+[ ] Fish               34▮               6 lb              ( )
+[ ] V-Type Engine      93▮               40 lb             (*)
+[ ] Generic Item       0▮                0 lb              ( )
+[ ] Generic Item       0▮                0 lb              ( )
+[*] Generic Item       0▮                0 lb              ( )
+[ ] Generic Item       0▮                0 lb              ( )
+[ ] Generic Item       0▮                0 lb              (*)
+[ ] Generic Item       0▮                0 lb              (*)
+[ ] Generic Item       0▮                0 lb              (*)
+[ ] Generic Item       0▮                0 lb              ( )
+[ ] Generic Item       0▮                0 lb              ( )
+[ ] Generic Item       0▮                0 lb              ( ) 
+[ ] Generic Item       0▮                0 lb              (*)
+------------------------------------------------------------------------
+Previous Item    [W]  |  Next Page              [D]  |  Sort Mode    [Z]
+Next Item        [S]  |  Previous Page          [A]  |  Main Menu  [Esc]
+Select Item  [Enter]  |  Export Selected Items  [E]  |  Sell Items   [G]
+</terminal>
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+
+Item summaries:
+________________________________________________________________________
+<terminal>
+                     Number of    Total       Total
+Item Name[ ]         Items [ ]    Worth[*]    Weight[ ]    Two-Handed[ ]    
+------------------------------------------------------------------------
+[ ] Bell             39           1049 ▮      429 lb       ( )
+[ ] Fish             10           34 ▮        6 lb         ( )
+[ ] V-Type Engine    5            93 ▮        40 lb        (*)
+[ ] Generic Item     0            0 ▮         0 lb         ( )
+[ ] Generic Item     0            0 ▮         0 lb         ( )
+[*] Generic Item     0            0 ▮         0 lb         ( )
+[ ] Generic Item     0            0 ▮         0 lb         ( )
+[ ] Generic Item     0            0 ▮         0 lb         (*)
+[ ] Generic Item     0            0 ▮         0 lb         (*)
+[ ] Generic Item     0            0 ▮         0 lb         (*)
+[ ] Generic Item     0            0 ▮         0 lb         ( )
+[ ] Generic Item     0            0 ▮         0 lb         ( )
+[ ] Generic Item     0            0 ▮         0 lb         ( ) 
+------------------------------------------------------------------------
+Previous Item    [W]  |  Next Page              [D]  |  Sort Mode    [Z]
+Next Item        [S]  |  Previous Page          [A]  |  Main Menu  [Esc]
+Select Item  [Enter]  |  Export Selected Items  [E]  |  Sell Items   [G]
+</terminal>
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+
+System summary:
+________________________________________________________________________
+<terminal>
+                           System Statistics
+------------------------------------------------------------------------
+          
+          OS:                                   Lethal Energistics 2
+          OS Version:                                    Version 2.1
+
+          Current number of stored items:                        59
+          Current weight of stored items:               4983 pounds
+          Current worth of stored items:               5938 credits
+
+          Total number of stored items:                         108
+          Total weight of stored items:                19388 pounds
+          Total worth of stored items:                30690 credits
+          
+          Lifetime number of stored items:                    38975
+          Lifetime weight of stored items:           2130985 pounds
+          Lifetime worth of stored items:           3298805 credits
+          
+------------------------------------------------------------------------
+Copy Statistics   [Ctrl+C]                              Main Menu  [Esc]
+</terminal>
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+
+Extract by worth:
+________________________________________________________________________
+<terminal>
+                           Sell or Extract
+------------------------------------------------------------------------
+
+
+
+
+
+
+
+        How many credits worth of items should be extracted?
+
+                          203456___ Credits
+
+
+
+
+
+
+------------------------------------------------------------------------
+Extract Items [E]      |      Sell Items [G]      |      Main Menu [Esc]
+</terminal>
+‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾

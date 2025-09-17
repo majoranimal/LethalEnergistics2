@@ -39,18 +39,119 @@
         -->
         <PathMap>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)'))=./</PathMap>
     </PropertyGroup>
+    <ItemGroup>
+      <Compile Remove=".DisabledPatches\**" />
+      <Compile Remove="DebugPatches\**" />
+      <Compile Remove="DevFiles\**" />
+      <Compile Remove="DisabledPatches\**" />
+      <Compile Remove="NewFolder\**" />
+      <EmbeddedResource Remove=".DisabledPatches\**" />
+      <EmbeddedResource Remove="DebugPatches\**" />
+      <EmbeddedResource Remove="DevFiles\**" />
+      <EmbeddedResource Remove="DisabledPatches\**" />
+      <EmbeddedResource Remove="NewFolder\**" />
+      <None Remove=".DisabledPatches\**" />
+      <None Remove="DebugPatches\**" />
+      <None Remove="DevFiles\**" />
+      <None Remove="DisabledPatches\**" />
+      <None Remove="NewFolder\**" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Remove="le2-chamber-bundle" />
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Include="le2-chamber-bundle" />
+    </ItemGroup>
 
     <!-- Primary Package References -->
-    <ItemGroup>
-        <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all"/>
-        <PackageReference Include="BepInEx.Core" Version="5.*" PrivateAssets="all"/>
-        <PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" PrivateAssets="all"/>
-        <PackageReference Include="LethalCompany.GameLibs.Steam" Version="*-*" PrivateAssets="all"/>
-        <PackageReference Include="UnityEngine.Modules" Version="2022.3.9" IncludeAssets="compile" PrivateAssets="all"/>
-        <PackageReference Include="TeamBMX.LobbyCompatibility" Version="1.*" PrivateAssets="all"/>
-    </ItemGroup>
 
     <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
-        <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all"/>
+        <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
     </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="BepInEx.Analyzers" Version="1.0.8">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="BepInEx.Core" Version="5.4.21" />
+      <PackageReference Include="BepInEx.PluginInfoProps" Version="2.1.0" />
+    </ItemGroup>
+
+	<PropertyGroup>
+		<Drive>C:</Drive>
+	</PropertyGroup>
+	
+    <ItemGroup>
+      <Reference Include="0Harmony">
+        <HintPath>$(Drive)\Program Files (x86)\Steam\steamapps\common\Lethal Company\BepInEx\core\0Harmony.dll</HintPath>
+      </Reference>
+      <Reference Include="Assembly-CSharp">
+        <HintPath>$(Drive)\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Assembly-CSharp.dll</HintPath>
+      </Reference>
+      <Reference Include="Assembly-CSharp-firstpass">
+        <HintPath>..\..\..\..\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+      </Reference>
+      <Reference Include="BepInEx">
+        <HintPath>$(Drive)\Program Files (x86)\Steam\steamapps\common\Lethal Company\BepInEx\core\BepInEx.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.InputSystem">
+        <HintPath>..\..\..\..\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Unity.InputSystem.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.Netcode.Runtime">
+        <HintPath>$(Drive)\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Unity.Netcode.Runtime.dll</HintPath>
+      </Reference>
+      <Reference Include="Unity.TextMeshPro">
+        <HintPath>..\..\..\..\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Unity.TextMeshPro.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine">
+        <HintPath>$(Drive)\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\UnityEngine.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.AnimationModule">
+        <HintPath>..\..\..\..\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\UnityEngine.AnimationModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.CoreModule">
+        <HintPath>$(Drive)\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      </Reference>
+	  <Reference Include="UnityEngine.AssetBundleModule">
+		<HintPath>$(Drive)\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\UnityEngine.AssetBundleModule.dll</HintPath>
+	  </Reference>
+	  <Reference Include="UnityEngine.PhysicsModule">
+	    <HintPath>$(Drive)\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
+	  </Reference>
+	  <Reference Include="UnityEngine.UI">
+	    <HintPath>..\..\..\..\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\UnityEngine.UI.dll</HintPath>
+	  </Reference>
+	  <Reference Include="UnityEngine.UIModule">
+	    <HintPath>..\..\..\..\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\UnityEngine.UIModule.dll</HintPath>
+	  </Reference>
+    </ItemGroup>
+
+	<Target Name="NetcodePatch" AfterTargets="PostBuildEvent">
+		<Exec Command="netcode-patch -nv 1.5.2 &quot;$(TargetPath)&quot; @(ReferencePathWithRefAssemblies->'&quot;%(Identity)&quot;', ' ')" />
+	</Target>
+	
+	 <!--The post-build properties are modified versions of the properties in https://github.com/Distractic/LethalCompanyTemplate/--> 
+	 <!--Define file locations for post-build scripts--> 
+	<PropertyGroup>
+	    <GameDir>C:\PROGRA~2\Steam\steamapps\common\Lethal Company\</GameDir>
+	    <PluginGameDir>$(GameDir)BepInEx\plugins\</PluginGameDir>
+	    <AssemblyGameDir>$(GameDir)Lethal Company_Data\Managed\</AssemblyGameDir>
+	    <GameExe>Lethal Company.exe</GameExe>
+	    <GameExePath>$(GameDir)$(GameExe)</GameExePath>
+
+	    <NumberOfClients>1</NumberOfClients>
+	    <DelayBetweenClientsInSeconds>5</DelayBetweenClientsInSeconds>
+	    <PingDelay>$([MSBuild]::Add($(DelayBetweenClientsInSeconds), 1))</PingDelay>
+	    <StartGame>true</StartGame>
+	</PropertyGroup>
+
+	 <!--Post-build scripts--> 
+	<Target Condition="'$(CI)' != 'true' And $(StartGame)" Name="StartGame" AfterTargets="AfterBuild">
+		<Copy SourceFiles="$(TargetDir)$(TargetFileName)" DestinationFiles="$(TargetDir)$(TargetFileName).tmp" />
+		<Move SourceFiles="$(TargetDir)$(TargetFileName).tmp" DestinationFiles="$(PluginGameDir)$(TargetFileName)" />
+		<Exec Command="taskkill /F /IM &quot;$(GameExe)&quot; /T || set errorlevel=0" IgnoreExitCode="true" />
+		<Exec Command="for /L %%i in (1,1,$(NumberOfClients)) do (start &quot;&quot; &quot;$(GameExePath)&quot; &amp; if %%i lss $(NumberOfClients) (ping 127.0.0.1 -n $(PingDelay) &gt; nul))" />
+	</Target>
+	
 </Project>
