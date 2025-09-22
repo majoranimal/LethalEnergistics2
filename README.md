@@ -1,93 +1,44 @@
-# Lethal Company Mod Template
+# LethalEnergistics2
 
-Thank you for using the mod template! Here are a few tips to help you on your journey:
+![Main Menu](https://github.com/user-attachments/assets/7c399931-c2e3-4872-83bd-76f6c8b12180)
 
-## Versioning
 
-BepInEx uses [semantic versioning, or semver](https://semver.org/), for the mod's version info.
-To increment it, you can either modify the version tag in the `.csproj` file directly, or use your IDE's UX to increment the version. Below is an example of modifying the `.csproj` file directly:
 
-```xml
-<!-- BepInEx Properties -->
-<PropertyGroup>
-    <AssemblyName>MajorAnimal.LethalEnergistics2</AssemblyName>
-    <Product>LethalEnergistics2</Product>
-    <!-- Change to whatever version you're currently on. -->
-    <Version>1.0.0</Version>
-</PropertyGroup>
-```
+#### Overview
 
-Your IDE will have the setting in `Package` or `NuGet` under `General` or `Metadata`, respectively.
+Lethal Energistics 2 is an easy to use storage mod for Lethal Company, this mod is based on the LE2 chamber which can purchased from the store for 200 credits, this chamber has an area where items are inserted and extracted along with a monitor to manage the items, the monitor is split into multiple sections which are covered further down on this page.
 
-## Logging
+![LE2 Chamber](https://github.com/user-attachments/assets/688feb98-9a72-4dca-bd8d-00bcc5b7be5f)
 
-A logger is provided to help with logging to the console.
-You can access it by doing `Plugin.Logger` in any class outside the `Plugin` class.
 
-***Please use*** `LogDebug()` ***whenever possible, as any other log method
-will be displayed to the console and potentially cause performance issues for users.***
 
-If you chose to do so, make sure you change the following line in the `BepInEx.cfg` file to see the Debug messages:
+#### Item List
+The main terminal menu is a list of every stored item, each item is displayed with it's name, value, weight and handedness (Two-handed or not) and can be sorted by these values, while in this menu you can either select multiple items and bulk extract/sell or extract/sell them individually, this menu also contains the bulk select features which can automatically select the items that will sum to the lowest possible value above a target, this allows you to sell the optimal items to prevent going over quota.
 
-```toml
-[Logging.Console]
+![Item List](https://github.com/user-attachments/assets/a92ec655-e7ab-4979-96ee-fb103c909613)
 
-# ... #
 
-## Which log levels to show in the console output.
-# Setting type: LogLevel
-# Default value: Fatal, Error, Warning, Message, Info
-# Acceptable values: None, Fatal, Error, Warning, Message, Info, Debug, All
-# Multiple values can be set at the same time by separating them with , (e.g. Debug, Warning)
-LogLevels = All
-```
 
-## Harmony
+#### Item Summaries
+The second menu is per item summaries, this menu displays per item totals showing you the exact weight of your 57 rubber ducks, this menu displays the item name, number of items, value of the items, weight of the items, and handedness of the items, on top of these features you can sell or extract entire groups of items using this menu.
 
-This template uses harmony. For more specifics on how to use it, look at
-[the HarmonyX GitHub wiki](https://github.com/BepInEx/HarmonyX/wiki) and
-[the Harmony docs](https://harmony.pardeike.net/).
+![Item Summaries](https://github.com/user-attachments/assets/161659d0-b996-440d-8e30-5f477f9ef165)
 
-To make a new harmony patch, just use `[HarmonyPatch]` before any class you make that has a patch in it.
 
-Then in that class, you can use
-`[HarmonyPatch(typeof(ClassToPatch), "MethodToPatch")]`
-where `ClassToPatch` is the class you're patching (ie `TVScript`), and `MethodToPatch` is the method you're patching (ie `SwitchTVLocalClient`).
 
-Then you can use
-[the appropriate prefix, postfix, transpiler, or finalizer](https://harmony.pardeike.net/articles/patching.html) attribute.
+#### System Statistics
+The third menu is the system statistics, this menu allows you to view statistics for every item in the system split into three sections, these sections are current (Items that are still in the system), total (Items that have been in the system in the current game), and lifetime (All items that have ever been in the system).
 
-_While you can use_ `return false;` _in a prefix patch,
-it is **HIGHLY DISCOURAGED** as it can **AND WILL** cause compatibility issues with other mods._
+![System Statistics](https://github.com/user-attachments/assets/e4ffbe9f-3739-4646-b0c5-fbc5760abcce)
 
-For example, we want to add a patch that will debug log the current players' position.
-We have the following postfix patch patching the `SwitchTVLocalClient` method
-in `TVScript`:
 
-```csharp
-using HarmonyLib;
 
-namespace LethalEnergistics2.Patches;
+## Planned features:
+- A menu that will allow you to deliver dropship items directly into the system rather than having to go out and collect them, to keep this fair the dropship still makes noise when it lands on top of the ship and could lure dogs inside.
+- Animations for items being "sucked" into the system and "dropped" back out
+- A vacuum tube with animations for selling items when on Gordion
+- Idle animations for players using the chamber terminal
+- The ability to "store" living players, this would compact the players wall-e style and lock their cameras into the new item (Despite the camera being attached they would be counted as dead)
 
-[HarmonyPatch(typeof(TVScript))]
-public class ExampleTVPatch
-{
-    [HarmonyPatch("SwitchTVLocalClient")]
-    [HarmonyPrefix]
-    private static void SwitchTvPrefix(TVScript __instance)
-    {
-        /*
-         *  When the method is called, the TV will be turning off when we want to
-         *  turn the lights on and vice-versa. At that time, the TV's tvOn field
-         *  will be the opposite of what it's doing, ie it'll be on when turning off.
-         *  So, we want to set the lights to what the tv's state was
-         *  when this method is called.
-         */
-        StartOfRound.Instance.shipRoomLights.SetShipLightsBoolean(__instance.tvOn);
-    }
-}
-```
-
-In this case we include the type of the class we're patching in the attribute
-before our `ExampleTVPatch` class,
-as our class will only patch the `TVScript` class.
+## Thanks
+This mod was inspired by the minecraft mods Applied Energistics 2 and Refined Storage along with the terraria mod Magic Storage.
